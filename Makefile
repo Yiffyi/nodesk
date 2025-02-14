@@ -10,10 +10,10 @@ test.exe:
 	$(MAKE) -C test
 
 minhook-clean:
-	$(MAKE) -C minhook -f build/MinGW/Makefile clean
+	$(MAKE) -C minhook -f $(TOPDIR)/Makefile-MinHook clean
 
 minhook-build:
-	$(MAKE) -C minhook -f build/MinGW/Makefile
+	$(MAKE) -C minhook -f $(TOPDIR)/Makefile-MinHook
 
 libNoDeskCommon.a:
 	$(MAKE) -C NoDeskCommon
