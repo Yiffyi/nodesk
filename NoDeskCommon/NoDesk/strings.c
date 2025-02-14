@@ -4,8 +4,7 @@ size_t wcslenb(LPCWSTR wstr) {
 	size_t len;
 	if SUCCEEDED(StringCbLengthW(wstr, MAX_PATH, &len)) {
 		return len;
-	}
-	else return 0;
+	} else return 0;
 }
 
 void DEBUG(LPCWSTR format, ...) {

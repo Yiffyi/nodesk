@@ -17,9 +17,9 @@ void GeneratePaths() {
 	GetModuleFileNameW(NULL, szCurName, MAX_PATH);
 	PathStripPathW(szCurName);
 
-	SHGetKnownFolderPath(FOLDERID_ProgramFiles, 0, NULL, &sys_ProgramFiles);
-	SHGetKnownFolderPath(FOLDERID_RoamingAppData, 0, NULL, &usr_RoamingAppData);
-	SHGetKnownFolderPath(FOLDERID_UserProgramFiles, 0, NULL, &usr_UserProgramFiles);
+	SHGetKnownFolderPath(&FOLDERID_ProgramFiles, 0, NULL, &sys_ProgramFiles);
+	SHGetKnownFolderPath(&FOLDERID_RoamingAppData, 0, NULL, &usr_RoamingAppData);
+	SHGetKnownFolderPath(&FOLDERID_UserProgramFiles, 0, NULL, &usr_UserProgramFiles);
 
 	StringCchPrintfW(target_dir, MAX_PATH, L"%s\\NoDesk", usr_UserProgramFiles);
 	StringCchPrintfW(target_dll, MAX_PATH, L"%s\\NoDesk\\crt.dll", usr_UserProgramFiles);

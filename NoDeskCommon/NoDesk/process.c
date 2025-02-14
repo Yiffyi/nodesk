@@ -1,7 +1,5 @@
 #include "process.h"
-
-#include "NoDesk/process.h"
-#include "NoDesk/strings.h"
+#include "strings.h"
 
 BOOL SimpleCreateProcess(LPCWSTR lpApp, LPWSTR lpCmdLine)
 {
@@ -25,7 +23,7 @@ BOOL InjectDllToProcess(LPCWSTR pszDllPath, LPPROCESS_INFORMATION lpProcessInfor
 
 	WriteProcessMemory(lpProcessInformation->hProcess, Param, (LPVOID)pszDllPath, wcslenb(pszDllPath), NULL);
 
-	HANDLE hThread = CreateRemoteThread(lpProcessInformation->hProcess, NULL, NULL, (LPTHREAD_START_ROUTINE)LoadLibraryW, Param, CREATE_SUSPENDED, NULL);
+	HANDLE hThread = CreateRemoteThread(lpProcessInformation->hProcess, NULL, 0, (LPTHREAD_START_ROUTINE)LoadLibraryW, Param, CREATE_SUSPENDED, NULL);
 	if (hThread)
 	{
 		ResumeThread(hThread);

@@ -100,6 +100,30 @@ BOOL WINAPI MySetWindowPos(
 	UINT uFlags
 );
 
+
+typedef BOOL (WINAPI* fnIsWindowVisible)(
+    _In_ HWND hWnd
+);
+
+extern fnIsWindowVisible fpIsWindowVisible;
+
+BOOL WINAPI MyIsWindowVisible(
+    _In_ HWND hWnd
+);
+
+typedef LONG (WINAPI* fnGetWindowLongW)(
+	HWND hWnd,
+	int  nIndex
+);
+
+extern fnGetWindowLongW fpGetWindowLongW;
+
+LONG WINAPI MyGetWindowLongW(
+	HWND hWnd,
+	int  nIndex
+);
+
+
 typedef BOOL(WINAPI * fnCreateProcessW)(
 	LPCWSTR               lpApplicationName,
 	LPWSTR                lpCommandLine,
@@ -182,6 +206,38 @@ BOOL WINAPI MyCreateProcessWithTokenW(
 	LPCWSTR               lpCurrentDirectory,
 	LPSTARTUPINFOW        lpStartupInfo,
 	LPPROCESS_INFORMATION lpProcessInformation
+);
+
+typedef BOOL(WINAPI* fnCreateProcessInternalW)(
+	HANDLE hToken,
+	LPCWSTR lpApplicationName,
+	LPWSTR lpCommandLine,
+	LPSECURITY_ATTRIBUTES lpProcessAttributes,
+	LPSECURITY_ATTRIBUTES lpThreadAttributes,
+	BOOL bInheritHandles,
+	DWORD dwCreationFlags,
+	LPVOID lpEnvironment,
+	LPCWSTR lpCurrentDirectory,
+	LPSTARTUPINFOW lpStartupInfo,
+	LPPROCESS_INFORMATION lpProcessInformation,
+	PHANDLE hNewToken
+	);
+
+extern fnCreateProcessInternalW fpCreateProcessInternalW;
+
+BOOL WINAPI MyCreateProcessInternalW(
+	HANDLE hToken,
+	LPCWSTR lpApplicationName,
+	LPWSTR lpCommandLine,
+	LPSECURITY_ATTRIBUTES lpProcessAttributes,
+	LPSECURITY_ATTRIBUTES lpThreadAttributes,
+	BOOL bInheritHandles,
+	DWORD dwCreationFlags,
+	LPVOID lpEnvironment,
+	LPCWSTR lpCurrentDirectory,
+	LPSTARTUPINFOW lpStartupInfo,
+	LPPROCESS_INFORMATION lpProcessInformation,
+	PHANDLE hNewToken
 );
 
 typedef BOOL (WINAPI * fnShell_NotifyIconW)(
