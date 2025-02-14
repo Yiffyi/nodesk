@@ -7,3 +7,6 @@ all: crt.dll
 
 crt.dll: dllmain.o DetourFunctions.o
 	$(CC) $(CFLAGS) $^ $(LDFLAGS) $(LDLIBS) -shared -o $@
+
+clean:
+	-del /q *.o crt.dll

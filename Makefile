@@ -9,9 +9,6 @@ all: minhook-build libNoDeskCommon.a crt.dll audiodg.exe
 test.exe:
 	$(MAKE) -C test
 
-minhook-clean:
-	$(MAKE) -C minhook -f $(TOPDIR)/Makefile-MinHook clean
-
 minhook-build:
 	$(MAKE) -C minhook -f $(TOPDIR)/Makefile-MinHook
 
@@ -24,5 +21,9 @@ audiodg.exe:
 crt.dll:
 	$(MAKE) -C NoDeskRT
 
-clean: minhook-clean
+clean:
+	-$(MAKE) -C minhook -f $(TOPDIR)/Makefile-MinHook clean
+	-$(MAKE) -C NoDeskCommon clean
+	-$(MAKE) -C NoDeskRT clean
+	-$(MAKE) -C NoDesk clean
 	echo "Cleared"

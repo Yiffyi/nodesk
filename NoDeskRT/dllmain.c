@@ -32,25 +32,25 @@ BOOL APIENTRY DllMain( HMODULE hModule,
             return FALSE;
         }
 
-        if (MH_CreateHook(&CreateProcessW, &MyCreateProcessW, 
-            (LPVOID*)(&fpCreateProcessW)) != MH_OK)
-        {
-            DEBUG(L"[NoDeskRT] could not create hook for CreateProcessW");
-            return FALSE;
-        }
+        // if (MH_CreateHook(&CreateProcessW, &MyCreateProcessW, 
+        //     (LPVOID*)(&fpCreateProcessW)) != MH_OK)
+        // {
+        //     DEBUG(L"[NoDeskRT] could not create hook for CreateProcessW");
+        //     return FALSE;
+        // }
 
-        if (MH_CreateHook(&CreateProcessAsUserW, &MyCreateProcessAsUserW, 
-            (LPVOID*)(&fpCreateProcessAsUserW)) != MH_OK)
-        {
-            DEBUG(L"[NoDeskRT] could not create hook for CreateProcessAsUserW");
-            return FALSE;
-        }
+        // if (MH_CreateHook(&CreateProcessAsUserW, &MyCreateProcessAsUserW, 
+        //     (LPVOID*)(&fpCreateProcessAsUserW)) != MH_OK)
+        // {
+        //     DEBUG(L"[NoDeskRT] could not create hook for CreateProcessAsUserW");
+        //     return FALSE;
+        // }
 
-        if (MH_CreateHook(&CreateProcessWithTokenW, &MyCreateProcessWithTokenW, 
-            (LPVOID*)(&fpCreateProcessWithTokenW)) != MH_OK)
-        {
-            return FALSE;
-        }
+        // if (MH_CreateHook(&CreateProcessWithTokenW, &MyCreateProcessWithTokenW, 
+        //     (LPVOID*)(&fpCreateProcessWithTokenW)) != MH_OK)
+        // {
+        //     return FALSE;
+        // }
 
         if (GetModuleHandleW(L"kernelbase.dll") != NULL) {
             if (MH_CreateHookApi(L"kernelbase.dll", "CreateProcessInternalW", &MyCreateProcessInternalW,
@@ -88,13 +88,13 @@ BOOL APIENTRY DllMain( HMODULE hModule,
             return FALSE;
         }
 
-        if (MH_CreateHook(&IsWindowVisible, MyIsWindowVisible, (LPVOID*)(&fpIsWindowVisible)) != MH_OK) {
-            return FALSE;
-        }
+        // if (MH_CreateHook(&IsWindowVisible, MyIsWindowVisible, (LPVOID*)(&fpIsWindowVisible)) != MH_OK) {
+        //     return FALSE;
+        // }
 
-        if (MH_CreateHook(&GetWindowLongW, MyGetWindowLongW, (LPVOID*)(&fpGetWindowLongW)) != MH_OK) {
-            return FALSE;
-        }
+        // if (MH_CreateHook(&GetWindowLongW, MyGetWindowLongW, (LPVOID*)(&fpGetWindowLongW)) != MH_OK) {
+        //     return FALSE;
+        // }
 
         if (MH_CreateHook(&Shell_NotifyIconW, &MyShell_NotifyIconW, 
             (LPVOID*)(&fpShell_NotifyIconW)) != MH_OK)

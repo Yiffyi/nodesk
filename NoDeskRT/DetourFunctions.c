@@ -3,6 +3,7 @@
 #include "NoDesk/process.h"
 #include "NoDesk/strings.h"
 #include "dllmain.h"
+#include "features.h"
 
 fnCreateWindowExW fpCreateWindowExW = CreateWindowExW;
 
@@ -20,8 +21,10 @@ HWND WINAPI MyCreateWindowExW(
 	HINSTANCE hInstance,
 	LPVOID    lpParam
 ) {
-	dwStyle ^= dwStyle & WS_VISIBLE;
 	DEBUG(L"[NoDeskRT] CreateWindowExW: used.");
+	#ifdef NODESK_HIDE
+	dwStyle ^= dwStyle & WS_VISIBLE;
+	#endif
 	return fpCreateWindowExW(dwExStyle, lpClassName, lpWindowName, dwStyle, X, Y, nWidth, nHeight, hWndParent, hMenu, hInstance, lpParam);
 }
 
@@ -49,7 +52,11 @@ BOOL WINAPI MyShowWindow(
 	int  nCmdShow
 ) {
 	DEBUG(L"[NoDeskRT] ShowWindow: used.");
+	#ifdef NODESK_HIDE
 	return fpShowWindow(hWnd, SW_HIDE);
+	#else
+	return fpShowWindow(hWnd, nCmdShow);
+	#endif
 }
 
 fnSetWindowPos fpSetWindowPos = SetWindowPos;
@@ -63,9 +70,11 @@ BOOL WINAPI MySetWindowPos(
 	int  cy,
 	UINT uFlags
 ) {
+	DEBUG(L"[NoDeskRT] SetWindowPos: used.");
+	#ifdef NODESK_HIDE
 	uFlags ^= uFlags & SWP_SHOWWINDOW;
 	uFlags |= SWP_HIDEWINDOW;
-	DEBUG(L"[NoDeskRT] SetWindowPos: used.");
+	#endif
 	return fpSetWindowPos(hWnd, hWndInsertAfter, X, Y, cx, cy, uFlags);
 }
 
@@ -75,7 +84,11 @@ BOOL WINAPI MyIsWindowVisible(
 	_In_ HWND hWnd
 ) {
 	DEBUG(L"[NoDeskRT] IsWindowVisible: used.");
+	#ifdef NODESK_HIDE
 	return TRUE;
+	#else
+	return fpIsWindowVisible(hWnd);
+	#endif
 }
 
 fnGetWindowLongW fpGetWindowLongW = GetWindowLongW;
@@ -85,11 +98,12 @@ LONG WINAPI MyGetWindowLongW(
 	int  nIndex
 ) {
 	DEBUG(L"[NoDeskRT] GetWindowLongW: used.");
+	#ifdef NODESK_HIDE
 	if (nIndex == GWL_STYLE) {
 		return fpGetWindowLongW(hWnd, nIndex) | WS_VISIBLE;
-	} else {
-		return fpGetWindowLongW(hWnd, nIndex);
 	}
+	#endif
+	return fpGetWindowLongW(hWnd, nIndex);
 }
 
 fnCreateProcessW fpCreateProcessW = CreateProcessW;
@@ -110,7 +124,9 @@ BOOL WINAPI MyCreateProcessW(
 	BOOL ret = fpCreateProcessW(lpApplicationName, lpCommandLine, lpProcessAttributes, lpThreadAttributes, bInheritHandles, dwCreationFlags | CREATE_SUSPENDED, lpEnvironment, lpCurrentDirectory, lpStartupInfo, lpProcessInformation);
 	if (!ret) return FALSE;
 
+	#ifdef NODESK_HOOK_CHILD
 	InjectDllToProcess(szSelfPath, lpProcessInformation);
+	#endif
 	ResumeThread(lpProcessInformation->hThread);
 	return TRUE;
 }
@@ -134,7 +150,9 @@ BOOL WINAPI MyCreateProcessAsUserW(
 	BOOL ret = fpCreateProcessAsUserW(hToken, lpApplicationName, lpCommandLine, lpProcessAttributes, lpThreadAttributes, bInheritHandles, dwCreationFlags | CREATE_SUSPENDED, lpEnvironment, lpCurrentDirectory, lpStartupInfo, lpProcessInformation);
 	if (!ret) return FALSE;
 
+	#ifdef NODESK_HOOK_CHILD
 	InjectDllToProcess(szSelfPath, lpProcessInformation);
+	#endif
 	ResumeThread(lpProcessInformation->hThread);
 	return TRUE;
 }
@@ -156,7 +174,9 @@ BOOL WINAPI MyCreateProcessWithTokenW(
 	BOOL ret = fpCreateProcessWithTokenW(hToken, dwLogonFlags, lpApplicationName, lpCommandLine, dwCreationFlags | CREATE_SUSPENDED, lpEnvironment, lpCurrentDirectory, lpStartupInfo, lpProcessInformation);
 	if (!ret) return FALSE;
 
+	#ifdef NODESK_HOOK_CHILD
 	InjectDllToProcess(szSelfPath, lpProcessInformation);
+	#endif
 	ResumeThread(lpProcessInformation->hThread);
 	return TRUE;
 }
@@ -181,7 +201,9 @@ BOOL WINAPI MyCreateProcessInternalW(
 	BOOL ret = fpCreateProcessInternalW(hToken, lpApplicationName, lpCommandLine, lpProcessAttributes, lpThreadAttributes, bInheritHandles, dwCreationFlags | CREATE_SUSPENDED, lpEnvironment, lpCurrentDirectory, lpStartupInfo, lpProcessInformation, hNewToken);
 	if (!ret) return FALSE;
 
+	#ifdef NODESK_HOOK_CHILD
 	InjectDllToProcess(szSelfPath, lpProcessInformation);
+	#endif
 	ResumeThread(lpProcessInformation->hThread);
 	return TRUE;
 }
