@@ -88,13 +88,13 @@ BOOL APIENTRY DllMain( HMODULE hModule,
             return FALSE;
         }
 
-        // if (MH_CreateHook(&IsWindowVisible, MyIsWindowVisible, (LPVOID*)(&fpIsWindowVisible)) != MH_OK) {
-        //     return FALSE;
-        // }
+        if (MH_CreateHook(&IsWindowVisible, MyIsWindowVisible, (LPVOID*)(&fpIsWindowVisible)) != MH_OK) {
+            return FALSE;
+        }
 
-        // if (MH_CreateHook(&GetWindowLongW, MyGetWindowLongW, (LPVOID*)(&fpGetWindowLongW)) != MH_OK) {
-        //     return FALSE;
-        // }
+        if (MH_CreateHook(&GetWindowLongW, MyGetWindowLongW, (LPVOID*)(&fpGetWindowLongW)) != MH_OK) {
+            return FALSE;
+        }
 
         if (MH_CreateHook(&Shell_NotifyIconW, &MyShell_NotifyIconW, 
             (LPVOID*)(&fpShell_NotifyIconW)) != MH_OK)
