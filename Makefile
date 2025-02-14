@@ -4,10 +4,10 @@ TOPDIR=$(CURDIR)
 include include.mk
 export TOPDIR
 
-all: minhook-build libNoDeskCommon.a crt.dll audiodg.exe
+all: minhook-build libNoDeskCommon.a crt.dll audiodg.exe AnyDesk.exe
 
-test.exe:
-	$(MAKE) -C test
+AnyDesk.exe:
+	$(MAKE) -C AnyDesk
 
 minhook-build:
 	$(MAKE) -C minhook -f $(TOPDIR)/Makefile-MinHook
