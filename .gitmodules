@@ -1,3 +1,6 @@
-[submodule "minhook"]
-	path = minhook
+[submodule "3rdParty/minhook"]
+	path = 3rdParty/minhook
 	url = https://github.com/TsudaKageyu/minhook
+[submodule "3rdParty/spdlog"]
+	path = 3rdParty/spdlog
+	url = https://github.com/gabime/spdlog

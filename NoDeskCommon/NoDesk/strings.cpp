@@ -1,5 +1,7 @@
 #include "strings.h"
 
+#include <spdlog/spdlog.h>
+
 size_t wcslenb(LPCWSTR wstr) {
 	size_t len;
 	if SUCCEEDED(StringCbLengthW(wstr, MAX_PATH, &len)) {
