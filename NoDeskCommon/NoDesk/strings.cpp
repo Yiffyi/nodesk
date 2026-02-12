@@ -9,12 +9,13 @@ size_t wcslenb(LPCWSTR wstr) {
 	} else return 0;
 }
 
-void DEBUG(LPCWSTR format, ...) {
+void DebugPrintf(LPCWSTR loc, LPCWSTR format, ...) {
 	WCHAR t[MAX_PATH];
 	va_list va;
 	va_start(va, format);
 	StringCchVPrintfW(t, MAX_PATH, format, va);
 	va_end(va);
 
+	OutputDebugStringW(loc);
 	OutputDebugStringW(t);
 }
