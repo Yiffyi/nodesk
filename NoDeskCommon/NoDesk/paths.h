@@ -1,6 +1,8 @@
 #pragma once
 #include "framework.h"
 
+EXTERN_C_BEGIN
+
 extern PWSTR sys_ProgramFiles;
 extern PWSTR usr_RoamingAppData;
 extern PWSTR usr_UserProgramFiles;
@@ -13,3 +15,5 @@ extern WCHAR config_service[MAX_PATH];
 extern WCHAR szCurName[MAX_PATH];
 
 void GeneratePaths();
+
+EXTERN_C_END
