@@ -1,5 +1,4 @@
-﻿// NoDeskInstaller.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
-//
+﻿#include "framework.h"
 
 #include <cstdio>
 
@@ -30,7 +29,7 @@ int main()
 {
     GeneratePaths();
 
-    wprintf(L"%s\n%s\n%s\n%s\n", target_dll, target_exe, target_launcher, config_service);
+    DEBUG(L"%s\n%s\n%s\n%s\n", target_dll, target_exe, target_launcher, config_service);
 	std::string szHash;
 
 	crypt::computeSHA256(L"NoDesk.exe", szHash);
@@ -46,7 +45,7 @@ int main()
 		ConfigureStartup();
 		InstallFiles();
 
-		SimpleCreateProcess(target_launcher);
+		SimpleCreateProcess(target_launcher, NULL);
 
 		system("pause");
 		return 0;

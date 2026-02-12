@@ -1,5 +1,5 @@
 add_library(
-    nodesk_common SHARED
+    nodesk_common STATIC
     NoDesk/crypt.cpp
     NoDesk/paths.c
     NoDesk/process.c
