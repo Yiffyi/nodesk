@@ -7,6 +7,8 @@
 HINSTANCE hInst;
 WCHAR szSelfFilename[MAX_PATH];
 
+extern void determine();
+
 int APIENTRY WinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
 	_In_ LPSTR    lpCmdLine,
@@ -43,6 +45,8 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance,
 		DEBUG(L"[NoDesk] Launcher: AnyDesk not found.");
 		return 0;
 	}
+
+	determine();
 
 	if (!CreateProcessW(NULL, target_exe, NULL, NULL, FALSE, CREATE_SUSPENDED, NULL, NULL, &si, &pi)) {
 		DEBUG(L"[NoDesk] Launcher: CreateProcess failed with %lu", GetLastError());
